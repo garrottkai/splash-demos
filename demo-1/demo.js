@@ -71,25 +71,36 @@ function animate() {
     //particleSystem.rotation.x += 0.01;
     particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
-    if(camera.position.z >= 500) {
+    if(camera.position.z >= 1500) {
         camera.position.z -= 10;
         if(yRotationSpeed > 0.01) {
             yRotationSpeed -= 0.00015;
         }
+        if (camera.position.z < 1700) {
+            var vecs = geometry.attributes.position.array;
+            for(var i = 0; i < vecs.length; i += 3) {
+                vecs[i] *= 1.2;
+                vecs[i + 1] *= 1.2;
+                vecs[i + 2] *= 1.2;
+
+            }console.log(vecs.length);
+            geometry.attributes.position.array = vecs;
+            geometry.attributes.position.needsUpdate = true;
+            //geometry.computeBoundingSphere();
+        }
     }
 
-    if (camera.position.z === 2500) {
+    if (1700 > camera.position.z > 1500) {
         var vecs = geometry.attributes.position.array;
-        // need to transform everything here
         for(var i = 0; i < vecs.length; i += 3) {
-            vecs[i] *= 2;
-            vecs[i + 1] *= 2;
-            vecs[i + 2] *= 2;
+            vecs[i] *= 1.2;
+            vecs[i + 1] *= 1.2;
+            vecs[i + 2] *= 1.2;
 
         }console.log(vecs.length);
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
-        geometry.computeBoundingSphere();
+        //geometry.computeBoundingSphere();
     }
 
     renderer.render(scene, camera);
