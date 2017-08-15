@@ -7,11 +7,11 @@ var scene = new THREE.Scene();
 var fov = 75;
 var aspect = window.innerWidth / window.innerHeight;
 var nearClippingPlane = 0.1;
-var farClippingPlane = 1000;
+var farClippingPlane = 10000;
 
 var camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
 
-camera.position.set( 0, 0, 1000 );
+camera.position.set( 0, 0, 5000 );
 /*
 var geometry = new THREE.SphereGeometry(50, 50, 50);
 
@@ -20,7 +20,7 @@ var geometry = new THREE.SphereGeometry(50, 50, 50);
 //var texture = loader.load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/crate.gif');
 
 var material = new THREE.LineBasicMaterial( {
-    color: 0xff4400,
+color: 0xff4400,
 } );
 
 var mesh = new THREE.Mesh(geometry, material);
@@ -37,9 +37,9 @@ scene.add(directionalLight);
 window.addEventListener( 'resize', onWindowResize, false );
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize( window.innerWidth, window.innerHeight );
 }
 */
 
@@ -55,9 +55,9 @@ var color = new THREE.Color();
 //var rad = geometry.radius;
 /*
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+min = Math.ceil(min);
+max = Math.floor(max);
+return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 */
 for ( var i = 0; i < positions.length; i += 3 ) {
@@ -95,19 +95,28 @@ var loader = new THREE.TextureLoader();
 var particleMap = loader.load('particle2.png');
 
 var material = new THREE.PointsMaterial({
-    color: 0xffffff,
-     size: 5,
-     map: particleMap
-  });
+    color: 0xff4400,
+    size: 10,
+    map: particleMap,
+    transparent: true
+});
 
 particleSystem = new THREE.Points( geometry, material );
 scene.add( particleSystem );
+
+yRotationSpeed = 0.2;
 function animate() {
     requestAnimationFrame(animate);
 
-    particleSystem.rotation.x += 0.01;
-    particleSystem.rotation.y += 0.01;
+    //particleSystem.rotation.x += 0.01;
+    particleSystem.rotation.y += yRotationSpeed;
     particleSystem.rotation.z += 0.01;
+    if(camera.position.z >= 500) {
+        camera.position.z -= 10;
+        if(yRotationSpeed > 0.01) {
+        yRotationSpeed -= 0.0001;
+    }
+    }
 
     renderer.render(scene, camera);
 }
