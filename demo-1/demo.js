@@ -11,7 +11,7 @@ var farClippingPlane = 1000;
 
 var camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
 
-camera.position.set( 0, 0, 50 );
+camera.position.set( 0, 0, 1000 );
 /*
 var geometry = new THREE.SphereGeometry(50, 50, 50);
 
@@ -45,35 +45,34 @@ function onWindowResize() {
 
 
 
-var particles = 1000;
+var particles = 50000;
+var positions = new Float32Array(particles * 3);
+var geometry = new THREE.BufferGeometry();
 
-var geometry = new THREE.SphereBufferGeometry();
-
-var positions = new Float32Array( particles * 3 );
 var colors = new Float32Array( particles * 3 );
 
 var color = new THREE.Color();
-var rad = geometry.radius;
-
+//var rad = geometry.radius;
+/*
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
-
+*/
 for ( var i = 0; i < positions.length; i += 3 ) {
 
 
 
     // positions
 
-    var x = getRandomInt(-rad, rad);
-    var y = getRandomInt(-rad, rad);
-    var z = getRandomInt(-rad, rad);
+    var randomDirection = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    var magnitudeFactor = Math.random() * 500;
+    var particleLocation = randomDirection.multiplyScalar(magnitudeFactor);
 
-    positions[ i ]     = x;
-    positions[ i + 1 ] = y;
-    positions[ i + 2 ] = z;
+    positions[ i ]     = randomDirection.x;
+    positions[ i + 1 ] = randomDirection.y;
+    positions[ i + 2 ] = randomDirection.z;
 
     // colors
 
@@ -92,8 +91,14 @@ for ( var i = 0; i < positions.length; i += 3 ) {
 geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 
+var loader = new THREE.TextureLoader();
+var particleMap = loader.load('particle2.png');
 
-var material = new THREE.PointsMaterial( { size: 15, vertexColors: THREE.VertexColors } );
+var material = new THREE.PointsMaterial({
+    color: 0xffffff,
+     size: 5,
+     map: particleMap
+  });
 
 particleSystem = new THREE.Points( geometry, material );
 scene.add( particleSystem );
