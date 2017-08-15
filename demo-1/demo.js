@@ -7,11 +7,11 @@ var scene = new THREE.Scene();
 var fov = 75;
 var aspect = window.innerWidth / window.innerHeight;
 var nearClippingPlane = 0.1;
-var farClippingPlane = 10000;
+var farClippingPlane = 5000;
 
 var camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
 
-camera.position.set( 0, 0, 5000 );
+camera.position.set( 0, 0, 3000 );
 
 
 var stats = new Stats();
@@ -19,6 +19,7 @@ document.body.appendChild( stats.dom );
 var particles = 10000;
 var positions = new Float32Array(particles * 3);
 var geometry = new THREE.BufferGeometry();
+geometry.dynamic = true;
 
 var colors = new Float32Array( particles * 3 );
 
@@ -77,8 +78,16 @@ function animate() {
         }
     }
 
-    if (camera.position.z === 3000) {
+    if (camera.position.z === 2500) {
+        var vecs = geometry.attributes.position.array;
         // need to transform everything here
+        for(var i = 0; i > vecs.length; i += 3) {
+            vecs[i] *= 2;
+            vecs[i + 1] *= 2;
+            vecs[i + 2] *= 2;
+        }
+        geometry.attributes.position.array = vecs;
+        geometry.attributes.position.needsUpdate = true;
     }
 
     renderer.render(scene, camera);
