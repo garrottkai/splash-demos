@@ -54,7 +54,7 @@ var loader = new THREE.TextureLoader();
 var particleMap = loader.load('particle2.png');
 
 var material = new THREE.PointsMaterial({
-    color: 0xff4400,
+    color: 0xffffff,
     size: 10,
     map: particleMap,
     blending: THREE.AdditiveBlending,
@@ -81,13 +81,15 @@ function animate() {
     if (camera.position.z === 2500) {
         var vecs = geometry.attributes.position.array;
         // need to transform everything here
-        for(var i = 0; i > vecs.length; i += 3) {
+        for(var i = 0; i < vecs.length; i += 3) {
             vecs[i] *= 2;
             vecs[i + 1] *= 2;
             vecs[i + 2] *= 2;
-        }
+
+        }console.log(vecs.length);
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
+        geometry.computeBoundingSphere();
     }
 
     renderer.render(scene, camera);
