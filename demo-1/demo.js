@@ -11,7 +11,7 @@ var farClippingPlane = 5000;
 
 var camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
 
-camera.position.set( 0, 0, 3000 );
+camera.position.set( 0, 0, 4000 );
 
 
 var stats = new Stats();
@@ -68,43 +68,30 @@ var material = new THREE.PointsMaterial({
 particleSystem = new THREE.Points( geometry, material );
 scene.add( particleSystem );
 
-yRotationSpeed = 0.1;
+yRotationSpeed = 0.3;
 function animate() {
     requestAnimationFrame(animate);
 
     //particleSystem.rotation.x += 0.01;
     particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
-    if(camera.position.z >= 1300) {
+    if(camera.position.z >= 1700) {
         camera.position.z -= 17;
-        if(yRotationSpeed > 0.005) {
-            yRotationSpeed -= 0.0012;
-        }
+    //    if(yRotationSpeed > 0.013) {
+    //        yRotationSpeed -= 0.001;
+    //    }
     }
-    if (camera.position.z >= 1800 && camera.position.z <= 2000) {
+    if (camera.position.z >= 1700 && camera.position.z <= 1900) {
         var vecs = geometry.attributes.position.array;
         for(var i = 0; i < vecs.length; i += 3) {
             //vecs[i] *= 1.2;
-            //vecs[i + 1] *= 1.2;
+            //vecs[i + 1] *= 1.2
             //vecs[i + 2] *= 1.2;
             vecs[i] *= Math.random() * 0.1 + 1.06;
             vecs[i + 1] *= Math.random() * 0.1 + 1.06;
             vecs[i + 2] *= Math.random() * 0.1 + 1.06;
-
         }
-        geometry.attributes.position.array = vecs;
-        geometry.attributes.position.needsUpdate = true;
-    }
-
-
-    if (1700 > camera.position.z > 1500) {
-        var vecs = geometry.attributes.position.array;
-        for(var i = 0; i < vecs.length; i += 3) {
-            vecs[i] *= 1.2;
-            vecs[i + 1] *= 1.2;
-            vecs[i + 2] *= 1.2;
-
-        }
+        yRotationSpeed *= .7;
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
     }
