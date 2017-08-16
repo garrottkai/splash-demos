@@ -59,7 +59,7 @@ var particleMap = loader.load('particle2.png');
 
 var material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 13,
+    size: 15,
     map: particleMap,
     blending: THREE.AdditiveBlending,
     transparent: true
@@ -75,7 +75,7 @@ function animate() {
     //particleSystem.rotation.x += 0.01;
     particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
-    if(camera.position.z >= 900) {
+    if(camera.position.z >= 800) {
         camera.position.z -= 17;
         //    if(yRotationSpeed > 0.013) {
         //        yRotationSpeed -= 0.001;
@@ -91,7 +91,7 @@ function animate() {
             vecs[i + 1] *= Math.random() * 0.1 + 1.06;
             vecs[i + 2] *= Math.random() * 0.1 + 1.06;
         }
-        yRotationSpeed *= .7;
+        yRotationSpeed *= .65;
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
     }
