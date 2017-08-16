@@ -68,7 +68,8 @@ var material = new THREE.PointsMaterial({
 particleSystem = new THREE.Points( geometry, material );
 scene.add( particleSystem );
 
-yRotationSpeed = 0.3;
+var backdrop;
+var yRotationSpeed = 0.3;
 function animate() {
     requestAnimationFrame(animate);
 
@@ -94,6 +95,16 @@ function animate() {
         yRotationSpeed *= .65;
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
+    }
+
+    if(camera.position.z <= 850) {
+        if(!backdrop) {
+            var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x010101});
+            backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000, backdropMaterial));
+            backdrop.position.z = -2000;
+            var lighting = new THREE.PointLight(0xffffff);
+            scene.add(backdrop, lighting);
+        }
     }
 
     renderer.render(scene, camera);
