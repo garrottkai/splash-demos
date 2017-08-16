@@ -1,6 +1,6 @@
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+document.getElementById('output').appendChild(renderer.domElement);
 
 var scene = new THREE.Scene();
 
@@ -38,7 +38,7 @@ for ( var i = 0; i < positions.length; i += 3 ) {
     positions[ i ]     = randomDirection.x;
     positions[ i + 1 ] = randomDirection.y;
     positions[ i + 2 ] = randomDirection.z;
-/*
+    /*
     var vx = 255;
     var vy = 69;
     var vz = 0;
@@ -48,7 +48,7 @@ for ( var i = 0; i < positions.length; i += 3 ) {
     colors[ i ]     = color.r;
     colors[ i + 1 ] = color.g;
     colors[ i + 2 ] = color.b;
-*/
+    */
 }
 
 geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
@@ -59,7 +59,7 @@ var particleMap = loader.load('particle2.png');
 
 var material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 10,
+    size: 13,
     map: particleMap,
     blending: THREE.AdditiveBlending,
     transparent: true
@@ -75,11 +75,11 @@ function animate() {
     //particleSystem.rotation.x += 0.01;
     particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
-    if(camera.position.z >= 1700) {
+    if(camera.position.z >= 900) {
         camera.position.z -= 17;
-    //    if(yRotationSpeed > 0.013) {
-    //        yRotationSpeed -= 0.001;
-    //    }
+        //    if(yRotationSpeed > 0.013) {
+        //        yRotationSpeed -= 0.001;
+        //    }
     }
     if (camera.position.z >= 1700 && camera.position.z <= 1900) {
         var vecs = geometry.attributes.position.array;
