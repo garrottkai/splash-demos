@@ -16,25 +16,29 @@ camera.position.set( 0, 0, 3000 );
 
 var stats = new Stats();
 document.body.appendChild( stats.dom );
-var particles = 10000;
+
+var particles = 100000;
 var positions = new Float32Array(particles * 3);
 var geometry = new THREE.BufferGeometry();
 geometry.dynamic = true;
-
+/*
 var colors = new Float32Array( particles * 3 );
 
 var color = new THREE.Color();
-
+*/
 for ( var i = 0; i < positions.length; i += 3 ) {
 
     var randomDirection = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-    var magnitudeFactor = Math.random() * 500;
-    var particleLocation = randomDirection.multiplyScalar(magnitudeFactor);
+    //var magnitudeFactor = Math.random() * 500;
+
+    var particleLocation = randomDirection.multiplyScalar(500);
+
+    //var particleLocation = randomDirection.multiplyScalar(magnitudeFactor);
 
     positions[ i ]     = randomDirection.x;
     positions[ i + 1 ] = randomDirection.y;
     positions[ i + 2 ] = randomDirection.z;
-
+/*
     var vx = 255;
     var vy = 69;
     var vz = 0;
@@ -44,11 +48,11 @@ for ( var i = 0; i < positions.length; i += 3 ) {
     colors[ i ]     = color.r;
     colors[ i + 1 ] = color.g;
     colors[ i + 2 ] = color.b;
-
+*/
 }
 
 geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+//geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 
 var loader = new THREE.TextureLoader();
 var particleMap = loader.load('particle2.png');
@@ -71,23 +75,27 @@ function animate() {
     //particleSystem.rotation.x += 0.01;
     particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
-    if(camera.position.z >= 1500) {
+    if(camera.position.z >= 1300) {
         camera.position.z -= 17;
-        if(yRotationSpeed > 0.001) {
-            yRotationSpeed -= 0.001;
-        }
-        if (camera.position.z < 1800) {
-            var vecs = geometry.attributes.position.array;
-            for(var i = 0; i < vecs.length; i += 3) {
-                vecs[i] *= 1.2;
-                vecs[i + 1] *= 1.2;
-                vecs[i + 2] *= 1.2;
-
-            }
-            geometry.attributes.position.array = vecs;
-            geometry.attributes.position.needsUpdate = true;
+        if(yRotationSpeed > 0.005) {
+            yRotationSpeed -= 0.0012;
         }
     }
+    if (camera.position.z >= 1800 && camera.position.z <= 2000) {
+        var vecs = geometry.attributes.position.array;
+        for(var i = 0; i < vecs.length; i += 3) {
+            //vecs[i] *= 1.2;
+            //vecs[i + 1] *= 1.2;
+            //vecs[i + 2] *= 1.2;
+            vecs[i] *= Math.random() * 0.1 + 1.06;
+            vecs[i + 1] *= Math.random() * 0.1 + 1.06;
+            vecs[i + 2] *= Math.random() * 0.1 + 1.06;
+
+        }
+        geometry.attributes.position.array = vecs;
+        geometry.attributes.position.needsUpdate = true;
+    }
+
 
     if (1700 > camera.position.z > 1500) {
         var vecs = geometry.attributes.position.array;
