@@ -1,6 +1,6 @@
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('output').appendChild(renderer.domElement);
+document.getElementById('container').insertBefore(renderer.domElement, document.getElementById('overlay'));
 
 var scene = new THREE.Scene();
 

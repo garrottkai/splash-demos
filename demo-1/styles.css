@@ -1,18 +1,18 @@
 #container {
-    width: 100%;
-    height: 100%;
+    width: 1280px;
+    height: 644px;
     position:relative;
 }
 
-#output, #overlay {
-    width: 100%;
-    height: 100%;
-    position: relative;
+canvas, #overlay {
+    width: 1280px;
+    height: 644px;
+    position: absolute;
     top: 0;
     left: 0;
 }
 
 #overlay {
     /*background: url('edited-trees.png');*/
-    z-index: 10;
+    z-index: 1000;
 }
