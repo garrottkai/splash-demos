@@ -1,3 +1,4 @@
+// <spaghetti type="revolting">
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').insertBefore(renderer.domElement, document.getElementById('overlay'));
@@ -17,7 +18,7 @@ camera.position.set( 0, 0, 4000 );
 var stats = new Stats();
 document.body.appendChild( stats.dom );
 
-var particles = 100000;
+var particles = 60000;
 var positions = new Float32Array(particles * 3);
 var geometry = new THREE.BufferGeometry();
 geometry.dynamic = true;
@@ -56,7 +57,7 @@ var particleMap = loader.load('circle.png');
 
 var material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 7,
+    size: 8,
     map: particleMap,
     blending: THREE.AdditiveBlending,
     transparent: true
@@ -117,7 +118,7 @@ function animate() {
         }
     }
     if(camera.position.z < 830 && camera.position.z > 800) {
-    //    approachSpeed *= .1;console.log(approachSpeed);
+        //    approachSpeed *= .1;console.log(approachSpeed);
     }
 
 
@@ -126,3 +127,4 @@ function animate() {
 }
 
 animate();
+// </spaghetti>
