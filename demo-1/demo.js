@@ -74,7 +74,7 @@ function animate() {
     requestAnimationFrame(animate);
 
     //particleSystem.rotation.x += 0.01;
-    particleSystem.rotation.y += yRotationSpeed;
+    particleSystem.rotation.z += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
     if(camera.position.z >= 800) {
         camera.position.z -= 17;
@@ -92,17 +92,20 @@ function animate() {
             vecs[i + 1] *= Math.random() * 0.1 + 1.06;
             vecs[i + 2] *= Math.random() * 0.1 + 1.06;
         }
-        yRotationSpeed *= .65;
+        yRotationSpeed *= .645;
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
     }
 
     if(camera.position.z <= 850) {
         if(!backdrop) {
-            var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x010101});
-            backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000, backdropMaterial));
+            //var loader = new THREE.TextureLoader();
+            //var texture = loader.load('airglow.jpg');
+            //var backdropMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: texture});
+            var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
+            backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
             backdrop.position.z = -2000;
-            var lighting = new THREE.PointLight(0xffffff);
+            var lighting = new THREE.PointLight({color: 0x00ff00, intensity: 10, distance: 0, decay: 2});
             scene.add(backdrop, lighting);
         }
     }
