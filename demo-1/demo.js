@@ -67,6 +67,7 @@ scene.add( particleSystem );
 
 var backdrop;
 var yRotationSpeed = -0.3;
+var approachSpeed = 17
 function animate() {
     requestAnimationFrame(animate);
 
@@ -75,7 +76,7 @@ function animate() {
     particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
     if(camera.position.z >= 800) {
-        camera.position.z -= 17;
+        camera.position.z -= approachSpeed;
         //    if(yRotationSpeed > 0.013) {
         //        yRotationSpeed -= 0.001;
         //    }
@@ -108,12 +109,14 @@ function animate() {
             lighting = scene.getObjectByName('lighting');
             if(lighting && (lighting.intensity < 0.7)) {
                 lighting.intensity += 0.005;
-
             }
             if(lighting && (lighting.intensity >= 0.7)) {
                 lightingFinished = true;
             }
         }
+    }
+    if(camera.position.z < 830 && camera.position.z > 800) {
+    //    approachSpeed *= .1;console.log(approachSpeed);
     }
 
 
