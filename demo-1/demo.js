@@ -87,9 +87,10 @@ function animate() {
             //vecs[i] *= 1.2;
             //vecs[i + 1] *= 1.2
             //vecs[i + 2] *= 1.2;
-            vecs[i] *= Math.random() * 0.1 + 1.06;
-            vecs[i + 1] *= Math.random() * 0.1 + 1.06;
-            vecs[i + 2] *= Math.random() * 0.1 + 1.06;
+            var r = Math.random() * 0.1 + 1.06;
+            vecs[i] *= r;
+            vecs[i + 1] *= r;
+            vecs[i + 2] *= r;
         }
         yRotationSpeed *= .63;
         geometry.attributes.position.array = vecs;
