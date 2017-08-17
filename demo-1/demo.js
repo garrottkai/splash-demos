@@ -83,7 +83,6 @@ function animate() {
             //vecs[i + 2] *= r;
         }
         yRotationSpeed *= .63;
-        geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
     }
     if(camera.position.z <= 1700) {
@@ -106,8 +105,8 @@ function animate() {
             }
         }
     }
-    if(camera.position.z < 830 && camera.position.z > 800) {
-        //    approachSpeed *= .1;console.log(approachSpeed);
+    if(camera.position.z < 950 && camera.position.z > 800 && approachSpeed > 1) {
+            approachSpeed *= .9;console.log(approachSpeed);
     }
 
 
