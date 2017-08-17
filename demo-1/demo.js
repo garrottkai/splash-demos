@@ -73,7 +73,7 @@ function animate() {
     }
     if (camera.position.z >= 1700 && camera.position.z <= 1900) {
         var vecs = geometry.attributes.position.array;
-        for(var i = 0; i < vecs.length; i += 3) {
+        /*for(var i = 0; i < vecs.length; i += 3) {
             vecs[i] *= 1.1;
             vecs[i + 1] *= 1.1;
             vecs[i + 2] *= 1.1;
@@ -81,6 +81,9 @@ function animate() {
             //vecs[i] *= r;
             //vecs[i + 1] *= r;
             //vecs[i + 2] *= r;
+        }*/
+        for(var i = 0; i < vecs.length; i ++) {
+            vecs[i] *= 1.1;
         }
         yRotationSpeed *= .63;
         geometry.attributes.position.needsUpdate = true;
