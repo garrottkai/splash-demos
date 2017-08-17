@@ -51,11 +51,11 @@ geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 //geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 
 var loader = new THREE.TextureLoader();
-var particleMap = loader.load('particle2.png');
+var particleMap = loader.load('circle.png');
 
 var material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 15,
+    size: 7,
     map: particleMap,
     blending: THREE.AdditiveBlending,
     transparent: true
@@ -65,12 +65,13 @@ particleSystem = new THREE.Points( geometry, material );
 scene.add( particleSystem );
 
 var backdrop;
-var yRotationSpeed = 0.3;
+var yRotationSpeed = -0.3;
 function animate() {
     requestAnimationFrame(animate);
 
     //particleSystem.rotation.x += 0.01;
     particleSystem.rotation.z += yRotationSpeed;
+    particleSystem.rotation.y += yRotationSpeed;
     //particleSystem.rotation.z += 0.01;
     if(camera.position.z >= 800) {
         camera.position.z -= 17;
@@ -88,20 +89,25 @@ function animate() {
             vecs[i + 1] *= Math.random() * 0.1 + 1.06;
             vecs[i + 2] *= Math.random() * 0.1 + 1.06;
         }
-        yRotationSpeed *= .645;
+        yRotationSpeed *= .63;
         geometry.attributes.position.array = vecs;
         geometry.attributes.position.needsUpdate = true;
     }
-
-    if(camera.position.z <= 850) {
+    if(camera.position.z <= 1700) {
+        var lighting;
         if(!backdrop) {
             var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
             backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
             backdrop.position.z = -2000;
-            var lighting = new THREE.PointLight(0x86fdff, .7, 0);
+            lighting = new THREE.PointLight(0x86fdff, 0.1, 0);
             scene.add(backdrop, lighting);
         }
+        if(lighting && lighting.intensity < 0.7) {
+            lighting.intensity += 0.005;
+            //scene.add(lighting)
+        }
     }
+    if(lighting) console.log(lighting.intensity);
 
     renderer.render(scene, camera);
     stats.update();
