@@ -84,7 +84,7 @@ function animate() {
         var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
         backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
         backdrop.position.z = -2000;
-        var lighting = new THREE.PointLight(0x86fdff/*0x89E3FF*/, 0.1, 0);
+        var lighting = new THREE.PointLight(/*0x86fdff*/0x89E3FF, 0.1, 0);
         lighting.name = 'lighting';
         scene.add(backdrop, lighting);
     }
