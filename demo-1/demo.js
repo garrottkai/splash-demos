@@ -13,7 +13,6 @@ var camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farCli
 
 camera.position.set( 0, 0, 4000 );
 
-
 var stats = new Stats();
 document.body.appendChild( stats.dom );
 
@@ -29,11 +28,8 @@ var color = new THREE.Color();
 for ( var i = 0; i < positions.length; i += 3 ) {
 
     var randomDirection = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-    //var magnitudeFactor = Math.random() * 500;
 
     var particleLocation = randomDirection.multiplyScalar(500);
-
-    //var particleLocation = randomDirection.multiplyScalar(magnitudeFactor);
 
     positions[ i ]     = randomDirection.x;
     positions[ i + 1 ] = randomDirection.y;
@@ -99,13 +95,10 @@ function animate() {
 
     if(camera.position.z <= 850) {
         if(!backdrop) {
-            //var loader = new THREE.TextureLoader();
-            //var texture = loader.load('airglow.jpg');
-            //var backdropMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: texture});
             var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
             backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
             backdrop.position.z = -2000;
-            var lighting = new THREE.PointLight({color: 0x00ff00, intensity: 10, distance: 0, decay: 2});
+            var lighting = new THREE.PointLight(0x86fdff, .7, 0);
             scene.add(backdrop, lighting);
         }
     }
