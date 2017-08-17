@@ -12,13 +12,12 @@ var nearClippingPlane = 0.1;
 var farClippingPlane = 5000;
 
 var camera = new THREE.PerspectiveCamera( fov, aspect, nearClippingPlane, farClippingPlane );
-
-camera.position.set( 0, 0, 4000 );
+camera.position.set( 0, 0, 3000 );
 
 var stats = new Stats();
 document.body.appendChild( stats.dom );
 
-var particles = 60000;
+var particles = 50000;
 var positions = new Float32Array(particles * 3);
 var geometry = new THREE.BufferGeometry();
 
@@ -26,7 +25,7 @@ for ( var i = 0; i < positions.length; i += 3 ) {
 
     var randomDirection = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
 
-    var particleLocation = randomDirection.multiplyScalar(500);
+    randomDirection.multiplyScalar(500);
 
     positions[ i ]     = randomDirection.x;
     positions[ i + 1 ] = randomDirection.y;
@@ -60,7 +59,8 @@ function onWindowResize() {
 
 var backdrop;
 var yRotationSpeed = -0.3;
-var approachSpeed = 17
+var approachSpeed = 17;
+
 function animate() {
     requestAnimationFrame(animate);
 
@@ -85,30 +85,32 @@ function animate() {
         yRotationSpeed *= .63;
         geometry.attributes.position.needsUpdate = true;
     }
-    if(camera.position.z <= 1700) {
 
-        if(!backdrop) {
-            var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
-            backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
-            backdrop.position.z = -2000;
-            var lighting = new THREE.PointLight(0x86fdff, 0.1, 0);
-            lighting.name = 'lighting';
-            scene.add(backdrop, lighting);
+    if(camera.position.z <= 1700 && !backdrop) {
+        var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
+        backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
+        backdrop.position.z = -2000;
+        var lighting = new THREE.PointLight(0x86fdff, 0.1, 0);
+        lighting.name = 'lighting';
+        scene.add(backdrop, lighting);
+    }
+
+    if(camera.position.z <= 1700 && !lightingFinished) {
+
+        lighting = scene.getObjectByName('lighting');
+
+        if(lighting && (lighting.intensity < 0.7)) {
+            lighting.intensity += 0.005;
         }
-        if(!lightingFinished) {
-            lighting = scene.getObjectByName('lighting');
-            if(lighting && (lighting.intensity < 0.7)) {
-                lighting.intensity += 0.005;
-            }
-            if(lighting && (lighting.intensity >= 0.7)) {
-                lightingFinished = true;
-            }
+
+        if(lighting && (lighting.intensity >= 0.7)) {
+            lightingFinished = true;
         }
     }
+
     if(camera.position.z < 950 && camera.position.z > 800 && approachSpeed > 1) {
-            approachSpeed *= .9;console.log(approachSpeed);
+        approachSpeed *= .9;
     }
-
 
     renderer.render(scene, camera);
     stats.update();
