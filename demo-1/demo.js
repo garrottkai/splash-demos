@@ -66,6 +66,14 @@ var material = new THREE.PointsMaterial({
 particleSystem = new THREE.Points( geometry, material );
 scene.add( particleSystem );
 
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
 var backdrop;
 var yRotationSpeed = -0.3;
 var approachSpeed = 17
