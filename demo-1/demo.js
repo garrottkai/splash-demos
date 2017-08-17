@@ -3,6 +3,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').insertBefore(renderer.domElement, document.getElementById('overlay'));
 
 var scene = new THREE.Scene();
+var lightingFinished = false;
 
 var fov = 75;
 var aspect = window.innerWidth / window.innerHeight;
@@ -94,20 +95,27 @@ function animate() {
         geometry.attributes.position.needsUpdate = true;
     }
     if(camera.position.z <= 1700) {
-        var lighting;
+
         if(!backdrop) {
             var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
             backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
             backdrop.position.z = -2000;
-            lighting = new THREE.PointLight(0x86fdff, 0.1, 0);
+            var lighting = new THREE.PointLight(0x86fdff, 0.1, 0);
+            lighting.name = 'lighting';
             scene.add(backdrop, lighting);
         }
-        if(lighting && lighting.intensity < 0.7) {
-            lighting.intensity += 0.005;
-            //scene.add(lighting)
+        if(!lightingFinished) {
+            lighting = scene.getObjectByName('lighting');
+            if(lighting && (lighting.intensity < 0.7)) {
+                lighting.intensity += 0.005;
+
+            }
+            if(lighting && (lighting.intensity >= 0.7)) {
+                lightingFinished = true;
+            }
         }
     }
-    if(lighting) console.log(lighting.intensity);
+
 
     renderer.render(scene, camera);
     stats.update();
