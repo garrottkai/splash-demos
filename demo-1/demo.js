@@ -58,6 +58,7 @@ function onWindowResize() {
 }
 
 var backdrop;
+var constellation;
 var yRotationSpeed = -0.3;
 var approachSpeed = 17;
 
@@ -81,12 +82,22 @@ function animate() {
     }
 
     if(camera.position.z <= 1700 && !backdrop) {
+
         var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
         backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
         backdrop.position.z = -2000;
+
+        var constellationMap = loader.load('constellation-basic.png');
+        var constellationMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, map: constellationMap, transparent: false});
+        constellation = new THREE.Mesh(new THREE.PlaneGeometry(1000, 400), constellationMaterial);
+        constellation.position.z = -1999;
+        constellation.position.x = -1200;
+        constellation.position.y = 900;
+        constellation.rotation.z = 0.8;
+
         var lighting = new THREE.PointLight(/*0x86fdff*/0x89E3FF, 0.1, 0);
         lighting.name = 'lighting';
-        scene.add(backdrop, lighting);
+        scene.add(backdrop, constellation, lighting);
     }
 
     if(camera.position.z <= 1700 && !lightingFinished) {
