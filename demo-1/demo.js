@@ -87,41 +87,36 @@ function animate() {
         var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
         backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
         backdrop.position.z = -2000;
-/*
-        var constellationMap = loader.load('constellation-basic.png');
-        var constellationMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, map: constellationMap, transparent: false});
-        constellation = new THREE.Mesh(new THREE.PlaneGeometry(1000, 400), constellationMaterial);
-        constellation.position.z = -1999;
-        constellation.position.x = -1200;
-        constellation.position.y = 900;
-        constellation.rotation.z = 0.8;
-*/
+
         var pointMap = particleSystem.geometry.attributes.position.array;
 
-        var vector1 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-        vector1.multiplyScalar(500);
+        var vector1 = new THREE.Vector3(/*Math.random(), Math.random(), Math.random()*/0,100,100).normalize();
+        vector1.multiplyScalar(1500);
 
-        var vector2 = new THREE.Vector3(vector1.x + 30, vector1.y, vector1.z);
-        var vector3 = new THREE.Vector3(vector2.x, vector2.y + 50, vector2.z);
-        var vector4 = new THREE.Vector3(vector3.x + 30, vector3.y, vector3.z);
-        var vector5 = new THREE.Vector3(vector4.x + 30, vector4.y + 20, vector4.z);
+        var vector2 = new THREE.Vector3(vector1.x + 150, vector1.y, vector1.z);
+        var vector3 = new THREE.Vector3(vector2.x, vector2.y + 250, vector2.z);
+        var vector4 = new THREE.Vector3(vector3.x + 150, vector3.y, vector3.z);
+        var vector5 = new THREE.Vector3(vector4.x + 150, vector4.y + 75, vector4.z);
 
         var len = pointMap.length;
-        pointMap[len - 15] = vector5.x;
-        pointMap[len - 14] = vector5.y;
-        pointMap[len - 13] = vector5.z;
-        pointMap[len - 12] = vector4.x;
-        pointMap[len - 11] = vector4.y;
-        pointMap[len - 10] = vector4.z;
-        pointMap[len - 9] = vector3.x;
-        pointMap[len - 8] = vector3.y;
-        pointMap[len - 7] = vector3.z;
-        pointMap[len - 6] = vector2.x;
-        pointMap[len - 5] = vector2.y;
-        pointMap[len - 4] = vector2.z;
-        pointMap[len - 3] = vector1.x;
-        pointMap[len - 2] = vector1.y;
-        pointMap[len - 1] = vector1.z;
+
+        for(i = len - 1; i > len - 300; i -= 15) {
+            pointMap[i - 14] = vector5.x + ((Math.random() - 0.5) * 8);
+            pointMap[i - 13] = vector5.y + ((Math.random() - 0.5) * 8);
+            pointMap[i - 12] = vector5.z + ((Math.random() - 0.5) * 8);
+            pointMap[i - 11] = vector4.x + ((Math.random() - 0.5) * 8);
+            pointMap[i - 10] = vector4.y + ((Math.random() - 0.5) * 8);
+            pointMap[i - 9] = vector4.z + ((Math.random() - 0.5) * 8);
+            pointMap[i - 8] = vector3.x + ((Math.random() - 0.5) * 8);
+            pointMap[i - 7] = vector3.y + ((Math.random() - 0.5) * 8);
+            pointMap[i - 6] = vector3.z + ((Math.random() - 0.5) * 8);
+            pointMap[i - 5] = vector2.x + ((Math.random() - 0.5) * 8);
+            pointMap[i - 4] = vector2.y + ((Math.random() - 0.5) * 8);
+            pointMap[i - 3] = vector2.z + ((Math.random() - 0.5) * 8);
+            pointMap[i - 2] = vector1.x + ((Math.random() - 0.5) * 8);
+            pointMap[i - 1] = vector1.y + ((Math.random() - 0.5) * 8);
+            pointMap[i] = vector1.z + ((Math.random() - 0.5) * 8);
+        }
 
         particleSystem.geometry.attributes.position.needsUpdate = true;
 
