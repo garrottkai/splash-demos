@@ -90,17 +90,17 @@ function animate() {
 
         var pointMap = particleSystem.geometry.attributes.position.array;
 
-        var vector1 = new THREE.Vector3(/*Math.random(), Math.random(), Math.random()*/0,100,100).normalize();
+        var vector1 = new THREE.Vector3(/*Math.random(), Math.random(), Math.random()*/0,-100,100).normalize();
         vector1.multiplyScalar(1500);
 
-        var vector2 = new THREE.Vector3(vector1.x + 150, vector1.y, vector1.z);
+        var vector2 = new THREE.Vector3(vector1.x - 150, vector1.y, vector1.z);
         var vector3 = new THREE.Vector3(vector2.x, vector2.y + 250, vector2.z);
-        var vector4 = new THREE.Vector3(vector3.x + 150, vector3.y, vector3.z);
-        var vector5 = new THREE.Vector3(vector4.x + 150, vector4.y + 75, vector4.z);
+        var vector4 = new THREE.Vector3(vector3.x - 150, vector3.y, vector3.z);
+        var vector5 = new THREE.Vector3(vector4.x - 150, vector4.y + 75, vector4.z);
 
         var len = pointMap.length;
 
-        for(i = len - 1; i > len - 300; i -= 15) {
+        for(i = len - 1; i > len - 600; i -= 15) {
             pointMap[i - 14] = vector5.x + ((Math.random() - 0.5) * 8);
             pointMap[i - 13] = vector5.y + ((Math.random() - 0.5) * 8);
             pointMap[i - 12] = vector5.z + ((Math.random() - 0.5) * 8);
