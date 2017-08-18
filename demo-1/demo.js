@@ -61,6 +61,7 @@ var backdrop;
 var constellation;
 var yRotationSpeed = -0.3;
 var approachSpeed = 17;
+var vecs = geometry.attributes.position.array;
 
 function animate() {
     requestAnimationFrame(animate);
@@ -73,7 +74,7 @@ function animate() {
 
     }
     if (camera.position.z >= 1700 && camera.position.z <= 1900) {
-        var vecs = geometry.attributes.position.array;
+
         for(var i = 0; i < vecs.length; i ++) {
             vecs[i] *= 1.1;
         }
@@ -94,6 +95,26 @@ function animate() {
         constellation.position.x = -1200;
         constellation.position.y = 900;
         constellation.rotation.z = 0.8;
+
+        var pointMap = particleSystem.geometry.attributes.position.array;
+        var randomVector = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
+        var vector2, vector3, vector4;
+        randomVector.multiplyScalar(500);
+        vector2 = new THREE.Vector3(randomVector.x + 30, randomVector.y, randomVector.z);
+        vector3 = new THREE.Vector3(vector2.x, vector2.y + 50, vector2.z);
+
+        var len = pointMap.length;
+        pointMap[len - 9] = vector3.x;
+        pointMap[len - 8] = vector3.y;
+        pointMap[len - 7] = vector3.z;
+        pointMap[len - 6] = vector2.x;
+        pointMap[len - 5] = vector2.y;
+        pointMap[len - 4] = vector2.z;
+        pointMap[len - 3] = randomVector.x;
+        pointMap[len - 2] = randomVector.y;
+        pointMap[len - 1] = randomVector.z;
+        particleSystem.geometry.attributes.position.needsUpdate = true;
+        console.log(particleSystem);
 
         var lighting = new THREE.PointLight(/*0x86fdff*/0x89E3FF, 0.1, 0);
         lighting.name = 'lighting';
