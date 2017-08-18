@@ -87,7 +87,7 @@ function animate() {
         var backdropMaterial = new THREE.MeshLambertMaterial({color: 0x555555});
         backdrop = new THREE.Mesh(new THREE.PlaneGeometry(9000, 5000), backdropMaterial);
         backdrop.position.z = -2000;
-
+/*
         var constellationMap = loader.load('constellation-basic.png');
         var constellationMaterial = new THREE.MeshBasicMaterial({color: 0xffffff, map: constellationMap, transparent: false});
         constellation = new THREE.Mesh(new THREE.PlaneGeometry(1000, 400), constellationMaterial);
@@ -95,30 +95,39 @@ function animate() {
         constellation.position.x = -1200;
         constellation.position.y = 900;
         constellation.rotation.z = 0.8;
-
+*/
         var pointMap = particleSystem.geometry.attributes.position.array;
-        var randomVector = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-        var vector2, vector3, vector4;
-        randomVector.multiplyScalar(500);
-        vector2 = new THREE.Vector3(randomVector.x + 30, randomVector.y, randomVector.z);
-        vector3 = new THREE.Vector3(vector2.x, vector2.y + 50, vector2.z);
+
+        var vector1 = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
+        vector1.multiplyScalar(500);
+
+        var vector2 = new THREE.Vector3(vector1.x + 30, vector1.y, vector1.z);
+        var vector3 = new THREE.Vector3(vector2.x, vector2.y + 50, vector2.z);
+        var vector4 = new THREE.Vector3(vector3.x + 30, vector3.y, vector3.z);
+        var vector5 = new THREE.Vector3(vector4.x + 30, vector4.y + 20, vector4.z);
 
         var len = pointMap.length;
+        pointMap[len - 15] = vector5.x;
+        pointMap[len - 14] = vector5.y;
+        pointMap[len - 13] = vector5.z;
+        pointMap[len - 12] = vector4.x;
+        pointMap[len - 11] = vector4.y;
+        pointMap[len - 10] = vector4.z;
         pointMap[len - 9] = vector3.x;
         pointMap[len - 8] = vector3.y;
         pointMap[len - 7] = vector3.z;
         pointMap[len - 6] = vector2.x;
         pointMap[len - 5] = vector2.y;
         pointMap[len - 4] = vector2.z;
-        pointMap[len - 3] = randomVector.x;
-        pointMap[len - 2] = randomVector.y;
-        pointMap[len - 1] = randomVector.z;
-        particleSystem.geometry.attributes.position.needsUpdate = true;
-        console.log(particleSystem);
+        pointMap[len - 3] = vector1.x;
+        pointMap[len - 2] = vector1.y;
+        pointMap[len - 1] = vector1.z;
 
-        var lighting = new THREE.PointLight(/*0x86fdff*/0x89E3FF, 0.1, 0);
+        particleSystem.geometry.attributes.position.needsUpdate = true;
+
+        var lighting = new THREE.PointLight(0x89E3FF, 0.1, 0);
         lighting.name = 'lighting';
-        scene.add(backdrop, constellation, lighting);
+        scene.add(backdrop, lighting);
     }
 
     if(camera.position.z <= 1700 && !lightingFinished) {
